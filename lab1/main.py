@@ -5,9 +5,9 @@ from tkinter import Scale, StringVar
 
 
 def cmyk2rgb(c, m, y, k):
-    r = round(255 * (1 - c) * (1 - k))
-    g = round(255 * (1 - m) * (1 - k))
-    b = round(255 * (1 - y) * (1 - k))
+    r = 255 * (1 - c) * (1 - k)
+    g = 255 * (1 - m) * (1 - k)
+    b = 255 * (1 - y) * (1 - k)
     return r, g, b
 
 
@@ -30,9 +30,9 @@ def rgb2hls(r, g, b):
     g = g / 255
     b = b / 255
     h, l, s = colorsys.rgb_to_hls(r, g, b)
-    h = round(h * 360)
-    l = round(l * 100)
-    s = round(s * 100)
+    h = h * 360
+    l = l * 100
+    s = s * 100
     return h, l, s
 
 
@@ -41,9 +41,9 @@ def hls2rgb(h, l, s):
     l = l / 100
     s = s / 100
     r, g, b = colorsys.hls_to_rgb(h, l, s)
-    r = round(r * 255)
-    g = round(g * 255)
-    b = round(b * 255)
+    r = r * 255
+    g = g * 255
+    b = b * 255
     return r, g, b
 
 
@@ -137,6 +137,8 @@ class App:
             self.r, self.g, self.b = hex2rgb(color)
             self.c, self.m, self.y, self.k = rgb2cmyk(self.r, self.g, self.b)
             self.h, self.l, self.s = rgb2hls(self.r, self.g, self.b)
+            self.r, self.g, self.b, self.h, self.l, self.s = round(self.r), round(self.g), round(self.b), round(
+                self.h), round(self.l), round(self.s)
             self.set_background_color(self.r, self.g, self.b)
             self.update_cmyk_labels(self.c, self.m, self.y, self.k)
             self.update_rgb_labels(self.r, self.g, self.b)
@@ -189,6 +191,8 @@ class App:
                 self.c, self.m, self.y, self.k = input_value
                 self.r, self.g, self.b = cmyk2rgb(self.c, self.m, self.y, self.k)
                 self.h, self.l, self.s = rgb2hls(self.r, self.g, self.b)
+                self.r, self.g, self.b, self.h, self.l, self.s = round(self.r), round(self.g), round(self.b), round(
+                    self.h), round(self.l), round(self.s)
                 self.set_background_color(self.r, self.g, self.b)
                 self.update_cmyk_labels(self.c, self.m, self.y, self.k)
                 self.update_rgb_labels(self.r, self.g, self.b)
@@ -203,6 +207,8 @@ class App:
                 self.r, self.g, self.b = input_value
                 self.c, self.m, self.y, self.k = rgb2cmyk(self.r, self.g, self.b)
                 self.h, self.l, self.s = rgb2hls(self.r, self.g, self.b)
+                self.r, self.g, self.b, self.h, self.l, self.s = round(self.r), round(self.g), round(self.b), round(
+                    self.h), round(self.l), round(self.s)
                 self.set_background_color(self.r, self.g, self.b)
                 self.update_cmyk_labels(self.c, self.m, self.y, self.k)
                 self.update_rgb_labels(self.r, self.g, self.b)
@@ -217,6 +223,8 @@ class App:
                 self.h, self.l, self.s = input_value
                 self.r, self.g, self.b = hls2rgb(self.h, self.l, self.s)
                 self.c, self.m, self.y, self.k = rgb2cmyk(self.r, self.g, self.b)
+                self.r, self.g, self.b, self.h, self.l, self.s = round(self.r), round(self.g), round(self.b), round(
+                    self.h), round(self.l), round(self.s)
                 self.set_background_color(self.r, self.g, self.b)
                 self.update_cmyk_labels(self.c, self.m, self.y, self.k)
                 self.update_rgb_labels(self.r, self.g, self.b)
@@ -246,8 +254,6 @@ class App:
     def set_background_color(self, r, g, b):
         hex_color = f"#{r:02x}{g:02x}{b:02x}"
         self.root.configure(background=hex_color)
-
-
 
 
 if __name__ == "__main__":
